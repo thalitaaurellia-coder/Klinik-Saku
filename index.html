@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klinik Saku - Layanan Kesehatan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Pengaturan Dasar */
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #00b4d8;
+            --accent-color: #90e0ef;
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Container menyerupai layar HP */
+        .app-container {
+            width: 100%;
+            max-width: 414px; /* Ukuran standar layar HP */
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Bagian Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px 40px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Profil User Singkat */
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .user-greeting .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Main Content & Grid Fitur */
+        main {
+            padding: 20px;
+            margin-top: -30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 10px;
+        }
+
+        .feature-card h3 {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .feature-card p {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* Banner Promo / Info */
+        .promo-banner {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .promo-banner i {
+            font-size: 30px;
+            color: var(--secondary-color);
+            margin-right: 15px;
+        }
+
+        .promo-banner div h4 {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .promo-banner div p {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Navigation Bar Bawah */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            display: block;
+            font-size: 10px;
+        }
+
+        /* Modal / Popup Sederhana */
+        .modal {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .modal-content button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <div class="user-greeting">
+                <div style="text-align: left;">
+                    <p style="font-size: 12px;">Selamat Datang,</p>
+                    <h2 style="font-size: 18px;">Pengguna Klinik Saku</h2>
+                </div>
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+            <h1>Klinik Saku</h1>
+            <p>Akses Medis Lebih Dekat, Lebih Cepat</p>
+        </header>
+
+        <main>
+            <div class="features-grid">
+                
+                <div class="feature-card" onclick="openModal('Konsultasi Dokter 24 Jam', 'Menghubungkan Anda dengan dokter umum dan spesialis via Chat atau Video Call.')">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <h3>Tanya Dokter</h3>
+                    <p>Chat/Video 24 Jam</p>
+                </div>
+
+                <div class="feature-card" onclick="openModal('Apotek Online', 'Beli obat resep atau bebas, langsung diantar ke alamat rumah Anda.')">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <h3>Beli Obat</h3>
+                    <p>Antar ke Rumah</p>
+                </div>
+
+                <div class="feature-card" onclick="openModal('Pesan Tes Lab', 'Pilih paket pemeriksaan laboratorium. Kami bisa datang ke rumah (Home Service) atau Anda kunjungi lab rekanan.')">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-flask-vial"></i>
+                    </div>
+                    <h3>Tes Lab</h3>
+                    <p>Booking Lab/Home Service</p>
+                </div>
+
+                <div class="feature-card" onclick="openModal('Layanan Home Care', 'Perawat profesional atau dokter akan datang ke rumah untuk merawat Anda.')">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-house-medical"></i>
+                    </div>
+                    <h3>Home Care</h3>
+                    <p>Perawatan di Rumah</p>
+                </div>
+
+            </div>
+
+            <div class="promo-banner">
+                <i class="fa-solid fa-shield-heart"></i>
+                <div>
+                    <h4>Butuh Bantuan Darurat?</h4>
+                    <p>Klik di sini untuk memanggil ambulans terdekat dari lokasi Anda.</p>
+                </div>
+            </div>
+        </main>
+
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Beranda</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Riwayat</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-bell"></i>
+                <span>Notifikasi</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Akun</span>
+            </div>
+        </div>
+
+        <div class="modal" id="infoModal">
+            <div class="modal-content">
+                <h3 id="modalTitle">Judul</h3>
+                <p id="modalDesc" style="margin-top:10px; font-size:14px; color:#555;">Deskripsi fitur.</p>
+                <button onclick="closeModal()">Tutup</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+    </script>
+
+</body>
+                      </html>
